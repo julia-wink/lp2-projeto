@@ -1,0 +1,80 @@
+classDiagram
+    class Professor {
+        -Long codigoFuncional
+        -String nome
+        -LocalDate dataNascimento
+        +getCodigoFuncional() Long
+        +getNome() String
+        +getDataNascimento() LocalDate
+        +setCodigoFuncional(Long)
+        +setNome(String)
+        +setDataNascimento(LocalDate)
+    }
+
+    class Curso {
+        -Long codigo
+        -String nome
+        -String descricao
+        +getCodigo() Long
+        +getNome() String
+        +getDescricao() String
+        +setCodigo(Long)
+        +setNome(String)
+        +setDescricao(String)
+    }
+
+    class Disciplina {
+        -Long numero
+        -String nome
+        -LocalDate dataInicio
+        -LocalDate dataEncerramento
+        -Professor professor
+        -Curso curso
+        +validarDataInicio(LocalDate)
+    }
+    
+    class ProfessorRepository {
+        <<Interface>>
+        +salvar(Professor)
+        +buscarPorCodigo(Long)
+        +listarTodos()
+        +deletar(Long)
+    }
+
+    class CursoRepository {
+        <<Interface>>
+        +salvar(Curso)
+        +buscarPorCodigo(Long)
+        +listarTodos()
+        +deletar(Long)
+    }
+
+    class DisciplinaRepository {
+        <<Interface>>
+        +salvar(Disciplina)
+        +buscarPorNumero(Long)
+        +listarTodas()
+        +deletar(Long)
+    }
+
+    class ProfessorService {
+        -ProfessorRepository professorRepository
+        +cadastrarProfessor(Professor)
+    }
+
+    class CursoService {
+        -CursoRepository cursoRepository
+        +cadastrarCurso(Curso)
+    }
+
+    class DisciplinaService {
+        -DisciplinaRepository disciplinaRepository
+        +registrarDisciplina(Disciplina)
+    }
+
+    Disciplina "1" -- "1" Professor : professor
+    Disciplina "1" -- "1" Curso : curso
+    
+    ProfessorService ..> ProfessorRepository : injeção
+    CursoService ..> CursoRepository : injeção
+    DisciplinaService ..> DisciplinaRepository : injeção
