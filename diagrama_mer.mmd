@@ -1,0 +1,24 @@
+erDiagram
+    PROFESSOR {
+        Long codigo_funcional PK
+        String nome
+        Date data_nascimento
+    }
+
+    CURSO {
+        Long codigo PK
+        String nome
+        String descricao
+    }
+
+    DISCIPLINA {
+        Long numero PK
+        String nome
+        Date data_inicio
+        Date data_encerramento
+        Long professor_codigo FK
+        Long curso_codigo FK
+    }
+
+    PROFESSOR ||--o{ DISCIPLINA : "ministra"
+    CURSO ||--o{ DISCIPLINA : "possui"
