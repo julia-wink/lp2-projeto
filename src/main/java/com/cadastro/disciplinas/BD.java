@@ -1,5 +1,9 @@
 package com.cadastro.disciplinas;
 
-public class BD {
+import com.cadastro.disciplinas.domain.repository.CursoRepository;
+import com.cadastro.disciplinas.domain.repository.DisciplinaRepository;
+import com.cadastro.disciplinas.domain.repository.ProfessorRepository;
+
+public class BD implements CursoRepository, DisciplinaRepository, ProfessorRepository{
     
 }
