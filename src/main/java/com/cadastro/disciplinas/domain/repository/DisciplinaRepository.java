@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DisciplinaRepository {
-    void salvar(Disciplina disciplina);
-    Optional<Disciplina> buscarPorNumero(Long numero);
-    List<Disciplina> listarTodas();
-    void deletar(Long numero);
+    void salvarDisciplina(Disciplina disciplina);
+    Optional<Disciplina> buscarPorNumeroDisciplina(Long numero);
+    List<Disciplina> listarTodasDisciplinas();
+    void deletarDisciplina(Long numero);
 }

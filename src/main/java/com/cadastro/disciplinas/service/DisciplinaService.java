@@ -13,9 +13,18 @@ public class DisciplinaService {
     }
 
     public void registrarDisciplina(Disciplina disciplina) {
+        
+        if (disciplina.getProfessor() == null) throw new IllegalArgumentException("Professor não pode ser nulo.");
+        if (disciplina.getCurso() == null) throw new IllegalArgumentException("Curso não pode ser nulo.");
+        if (disciplina.getNumero() <= 0) throw new IllegalArgumentException("Número deve ser maior que zero.");
+        if (disciplina.getNome() == null) throw new IllegalArgumentException("Nome não deve ser nulo.");
+        if (disciplina.getDataInicio() == null) throw new IllegalArgumentException("Data de início não deve ser nula.");
+        
         // R4: Validando a data de início através da lógica de negócio na própria entidade
         disciplina.validarDataInicio(LocalDate.now());
+        if (disciplina.getDataEncerramento() == null) throw new IllegalArgumentException("Data de encerramento não deve ser nula.");
+        if (disciplina.getDataInicio().isAfter(disciplina.getDataEncerramento())) if (disciplina.getDataEncerramento() == null) throw new IllegalArgumentException("Data de encerramento não deve ser antes de data de início.");
         
-        disciplinaRepository.salvar(disciplina);
+        disciplinaRepository.salvarDisciplina(disciplina);
     }
 }

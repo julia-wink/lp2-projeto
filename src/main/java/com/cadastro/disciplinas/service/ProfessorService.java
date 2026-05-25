@@ -1,9 +1,11 @@
 package com.cadastro.disciplinas.service;
 
+import java.time.LocalDate;
+
 import com.cadastro.disciplinas.domain.model.Professor;
 import com.cadastro.disciplinas.domain.repository.ProfessorRepository;
 
-public class ProfessorService implements ProfessorRepository{
+public class ProfessorService{
     private final ProfessorRepository professorRepository;
 
     // Injeção de dependência via construtor
@@ -12,43 +14,14 @@ public class ProfessorService implements ProfessorRepository{
     }
 
     public void cadastrarProfessor(Professor professor) {
-        // Implementar regras futuras antes de salvar
-        professorRepository.salvar(professor);
-    }
+        
+        LocalDate maioridade = LocalDate.now().minusYears(18);
 
-    @Override
-    public void salvar(Professor professor){
-        professores.add(professor); 
+        if (professor == null) throw new IllegalArgumentException("Professor não pode ser nulo.");
+        if (professor.getCodigoFuncional() <= 0) throw new IllegalArgumentException("Código funcional deve ser maior que zero.");
+        if (professor.getNome() == null) throw new IllegalArgumentException("Nome não pode ser nulo.");
+        if (professor.getDataNascimento().isAfter(maioridade)) throw new IllegalArgumentException("Professor deve ter pelo menos 18 anos.");
+        
+        professorRepository.salvarProfessor(professor);
     }
-
-    @Override
-    public void buscarPorCodigo(Long codigoFuncional){
-        for (Professor p : professores){
-            if(p.getCodigoFuncional().equals(codigoFuncional)){
-                System.out.println("Professor " + p.getNome() + " encontrado");
-            }
-        }
-    }
-
-     @Override
-    public void listarTodos(){
-        for (Professor p : professores){
-            System.out.println("Professor " + p.getNome() + "\n");
-        }
-    }
-
-     @Override
-    public void deletar(Long codigoFuncional){
-        Iterator<Professor> iterator = professores.iterator();
-
-        while (iterator.hasNext()) {
-            Professor p = iterator.next();
-            if (p.getCodigoFuncional().equals(codigoFuncional)) {
-                iterator.remove();
-                System.out.println("Professor removido com sucesso!");
-                return;
-            }
-        }
-            System.out.println("Professor não encontrado.");
-        }
-    }
+}
