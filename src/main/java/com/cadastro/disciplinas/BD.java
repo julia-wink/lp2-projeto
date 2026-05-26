@@ -208,7 +208,7 @@ public class BD implements ProfessorRepository, CursoRepository, DisciplinaRepos
    
    @Override
    public Optional<Disciplina> buscarPorNumeroDisciplina(Long numero){
-        
+    
         String sql = "SELECT * FROM disciplina WHERE numero = ?";
         
         try (PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -220,17 +220,12 @@ public class BD implements ProfessorRepository, CursoRepository, DisciplinaRepos
                     String nome = rs.getString("nome");
                     LocalDate dataInicio = rs.getDate("data_inicio").toLocalDate();
                     LocalDate dataEncerramento = rs.getDate("data_encerramento").toLocalDate();
-
-                    Disciplina disciplina = new Disciplina(null, null, null, null, null, null);
-                    Professor codigoProfessor = new Professor(null, null, null);
-                    codigoProfessor.setCodigoFuncional(rs.getLong("codigo_professor"));
-                    disciplina.setProfessor(codigoProfessor);
-
-                    Curso codigoCurso = new Curso(null, null, null);
-                    codigoCurso.setCodigo(rs.getLong("codigo_curso"));
-                    disciplina.setCurso(codigoCurso);
+                    Professor professor = new Professor(null, null, null);
+                    professor.setCodigoFuncional(rs.getLong("codigo_professor"));
+                    Curso curso = new Curso(null, null, null);
+                    curso.setCodigo(rs.getLong("codigo_curso"));
                     
-                    disciplina = new Disciplina (nro, nome, dataInicio, dataEncerramento, codigoProfessor, codigoCurso);
+                    Disciplina disciplina = new Disciplina (nro, nome, dataInicio, dataEncerramento, professor, curso);
                     return Optional.of(disciplina);
                 } else return Optional.empty();
             }
