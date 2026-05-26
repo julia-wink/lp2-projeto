@@ -12,7 +12,12 @@ public class CursoService {
     }
 
     public void cadastrarCurso(Curso curso) {
-        // Implementar regras futuras antes de salvar
-        cursoRepository.salvar(curso);
+        
+        if (curso == null) throw new IllegalArgumentException("Curso não pode ser nulo.");
+        if (curso.getCodigo() <= 0) throw new IllegalArgumentException("Código deve ser maior que zero.");
+        if (curso.getNome() == null) throw new IllegalArgumentException("Nome não deve ser nulo.");
+        if (curso.getDescricao() == null) throw new IllegalArgumentException("Descrição não deve ser nula.");
+
+        cursoRepository.salvarCurso(curso);
     }
 }
